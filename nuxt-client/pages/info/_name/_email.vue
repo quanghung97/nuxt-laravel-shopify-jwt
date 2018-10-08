@@ -25,6 +25,10 @@ export default {
             Cookie.set('token_cookie', this.$store.state.auth.token)
             Cookie.set('name', this.$store.state.auth.name)
             Cookie.set('email', this.$store.state.auth.email)
+        } else {
+            Cookies.remove('token_cookie')
+            Cookies.remove('name')
+            Cookies.remove('email')
         }
         this.$router.push({ path: '/secret' })
     }

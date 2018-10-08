@@ -24,6 +24,9 @@ const createStore = () => {
                     } catch (err) {
                         // No valid cookie found
                     }
+                } else {
+                    commit('auth/SET_TOKEN', null)
+                    commit('auth/SET_USER', '')
                 }
             }
         }
