@@ -1,7 +1,7 @@
 const pkg = require('./package')
 
 module.exports = {
-    mode: 'spa',
+    mode: 'universal',
 
     /*
     ** Headers of the page
@@ -20,7 +20,7 @@ module.exports = {
       /*
       ** Customize the progress-bar color
       */
-      loading: { color: '#fff' },
+      loading: { color: '#3359c4', height: '5px' },
 
       /*
       ** Global CSS
@@ -33,7 +33,7 @@ module.exports = {
       ** Plugins to load before mounting the App
       */
       plugins: [
-          '~plugins/vue-cookies.js'
+          //'~/plugins/axios'
       ],
 
       /*
@@ -43,14 +43,14 @@ module.exports = {
         // Doc: https://github.com/nuxt-community/axios-module#usage
         '@nuxtjs/axios',
         // Doc: https://bootstrap-vue.js.org/docs/
-        'bootstrap-vue/nuxt',
-        'vue-cookie'
+        'bootstrap-vue/nuxt'
       ],
       /*
       ** Axios module configuration
       */
       axios: {
         // See https://github.com/nuxt-community/axios-module#options
+        // https: false
       },
       /*
       ** Build configuration

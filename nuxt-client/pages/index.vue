@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <div class="container">
         <div>
             <logo/>
             <h1 class="title">
@@ -21,7 +21,8 @@
                         class="button--grey">GitHub</a>
             </div>
         </div>
-    </section>
+        <nuxt-link to="/secret">Go to /secret</nuxt-link>
+    </div>
 </template>
 
 <script>
@@ -30,6 +31,13 @@ import Logo from '~/components/Logo.vue'
 export default {
     components: {
         Logo
+    },
+    asyncData() {
+        return new Promise(resolve => {
+            setTimeout(function() {
+                resolve({ name: 'world' })
+            }, 1000)
+        })
     }
 }
 </script>

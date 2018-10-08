@@ -1,9 +1,5 @@
 <template>
     <div>
-        <img
-                v-if="loading"
-                style="height: 10px"
-                src="https://i.imgur.com/JfPpwOA.gif">
         <nuxt />
     </div>
 </template>
@@ -11,28 +7,11 @@
 import { mapActions } from 'vuex'
 
 export default {
-    data() {
-        return {
-            loading: false,
-            value: 0
-        }
-    },
     mounted() {
         this.$nextTick(() => {
             this.$nuxt.$loading.start()
 
             setTimeout(() => this.$nuxt.$loading.finish(), 1000)
-        })
-    },
-    created() {
-        this.loading = true
-        this.accessToken().then(() => {
-            this.loading = false
-        })
-    },
-    methods: {
-        ...mapActions({
-            accessToken: 'auth/accessToken'
         })
     }
 }

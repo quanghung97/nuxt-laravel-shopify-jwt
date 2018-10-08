@@ -8,7 +8,6 @@ export default {
         name: null,
         email: null
     },
-
     mutations: {
         SET_USER(state, user) {
             state.name = user.name
@@ -20,57 +19,44 @@ export default {
     },
     actions: {
         async login({ commit, state }, params) {
-            try {
-                await axios
-                    .post('api/login', {
-                        name: state.name,
-                        email: state.email
-                    })
-                    .then(response => {
-                        //console.log(response.data.data.token)
-                        commit('SET_TOKEN', response.data.data.token)
-                        Cookie.set('token_cookie', response.data.data.token)
-                        this.$router.push({ path: '/secret' })
-                    })
-                //console.log(data)
-                //commit('SET_USER', data)
-            } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    throw new Error('Bad credentials')
-                }
-                throw error
-                commit('SET_USER', null)
-                commit('SET_TOKEN', null)
-            }
+            //console.log(params)
+            commit('SET_USER', params)
+            await axios
+                .post('/api/login', {
+                    name: params.name,
+                    email: params.email
+                })
+                .then(response => {
+                    // console.log(response.data.data.token)
+                    commit('SET_TOKEN', response.data.data.token)
+                    //Cookie.set('token_cookie', response.data.data.token)
+                    //this.$router.push({ path: '/secret' })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         async logout({ commit }) {
             await axios.post('/api/logout')
-            commit('SET_USER', null)
-            commit('SET_TOKEN', null)
+            commit('SET_USER', '')
+            commit('SET_TOKEN', '')
         },
         async accessToken({ commit, state }) {
-            try {
-                await axios
-                    .get('api/user-info', {
-                        headers: {
-                            Authorization: `Bearer ${Cookie.get(
-                                'token_cookie'
-                            )}`
-                        }
-                    })
-                    .then(response => {
-                        //console.log(response)
-                        commit('SET_USER', response.data.result)
-                        commit('SET_TOKEN', Cookie.get('token_cookie'))
-                    })
-            } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    throw new Error('Bad credentials')
-                }
-                throw error
-                commit('SET_USER', null)
-                commit('SET_TOKEN', null)
-            }
+            await axios
+                .get('api/user-info', {
+                    headers: {
+                        Authorization: `Bearer ${Cookie.get('token_cookie')}`
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                    commit('SET_USER', response.data.result)
+                    commit('SET_TOKEN', Cookie.get('token_cookie'))
+                })
+                .catch(error => {
+                    commit('SET_USER', '')
+                    commit('SET_TOKEN', '')
+                })
         }
     }
 }

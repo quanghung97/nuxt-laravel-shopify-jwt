@@ -1,10 +1,9 @@
 <template>
     <div>
-        <h1>This is secret page.</h1>
-        <nuxt-link to="/">Back home</nuxt-link>
+        <h1>adsdas</h1>
+        <nuxt-link to="/">Go to /</nuxt-link>
     </div>
 </template>
-
 <script>
 export default {
     middleware: 'authenticated'

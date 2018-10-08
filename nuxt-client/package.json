@@ -24,8 +24,8 @@
     "js-cookie": "^2.2.0",
     "nuxt": "latest",
     "nuxt-oauth": "^2.0.0",
-    "vue-cookie": "^1.1.4",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.0.0",
+    "polaris-vue": "file:../../polaris-vue"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",

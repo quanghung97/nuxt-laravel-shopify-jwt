@@ -53,6 +53,12 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 export default {
+    middleware: 'authenticated',
+    // async validate({ params, query, store, redirect }) {
+    //     // await operations
+    //     return true // if the params are valid
+    //     return false // will stop Nuxt.js to render the route and display the error page
+    // },
     data() {
         return {
             userInfo: {
