@@ -30,10 +30,17 @@ class AuthController extends Controller
                 'message' => $validator->messages()
             ]);
         }
+        $token = null;
         try {
             // Attempt to verify the credentials and create a token for the user
             $user = User::where(['name' => $request->name, 'email' => $request->email])->first();
-            if (! $token = JWTAuth::fromUser($user)) {
+            // dd(JWTAuth::fromUser($user));
+            if ($user == null) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'We can`t find an account with this credentials.'
+                ], 401);
+            } elseif (! $token = JWTAuth::fromUser($user)) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'We can`t find an account with this credentials.'

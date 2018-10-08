@@ -4,6 +4,7 @@ import Vue from 'vue'
 import auth from './modules/auth'
 import axios from 'axios'
 const cookieparser = process.server ? require('cookieparser') : undefined
+const Cookie = require('js-cookie')
 
 Vue.use(Vuex)
 
@@ -14,12 +15,12 @@ const createStore = () => {
         },
         actions: {
             async nuxtServerInit({ dispatch, commit }, { req }) {
-                await dispatch('auth/accessToken')
                 if (req.headers.cookie) {
                     const parsed = cookieparser.parse(req.headers.cookie)
                     try {
                         //console.log(parsed.token_cookie)
                         commit('auth/SET_TOKEN', parsed.token_cookie)
+                        commit('auth/SET_USER', parsed)
                     } catch (err) {
                         // No valid cookie found
                     }

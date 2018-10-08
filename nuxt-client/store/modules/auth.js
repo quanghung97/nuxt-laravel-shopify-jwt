@@ -20,15 +20,22 @@ export default {
     actions: {
         async login({ commit, state }, params) {
             //console.log(params)
-            commit('SET_USER', params)
+            //commit('SET_USER', params)
             await axios
                 .post('/api/login', {
                     name: params.name,
                     email: params.email
                 })
                 .then(response => {
-                    // console.log(response.data.data.token)
-                    commit('SET_TOKEN', response.data.data.token)
+                    if (response.data.data.token) {
+                        commit('SET_TOKEN', response.data.data.token)
+                        commit('SET_USER', params)
+                    } else {
+                        commit('SET_TOKEN', null)
+                        commit('SET_USER', null)
+                    }
+                    //commit('SET_TOKEN', response.data.data.token)
+                    //commit('SET_USER', params)
                     //Cookie.set('token_cookie', response.data.data.token)
                     //this.$router.push({ path: '/secret' })
                 })
@@ -38,25 +45,13 @@ export default {
         },
         async logout({ commit }) {
             await axios.post('/api/logout')
-            commit('SET_USER', '')
-            commit('SET_TOKEN', '')
+            commit('SET_USER', null)
+            commit('SET_TOKEN', null)
         },
         async accessToken({ commit, state }) {
-            await axios
-                .get('api/user-info', {
-                    headers: {
-                        Authorization: `Bearer ${Cookie.get('token_cookie')}`
-                    }
-                })
-                .then(response => {
-                    console.log(response)
-                    commit('SET_USER', response.data.result)
-                    commit('SET_TOKEN', Cookie.get('token_cookie'))
-                })
-                .catch(error => {
-                    commit('SET_USER', '')
-                    commit('SET_TOKEN', '')
-                })
+            console.log(response)
+            //commit('SET_USER', response.data.result)
+            //commit('SET_TOKEN', Cookie.get('token_cookie'))
         }
     }
 }

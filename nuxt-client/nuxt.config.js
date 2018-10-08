@@ -20,7 +20,7 @@ module.exports = {
       /*
       ** Customize the progress-bar color
       */
-      loading: { color: '#3359c4', height: '5px' },
+      loading: { color: '#3359c4' },
 
       /*
       ** Global CSS
@@ -61,14 +61,14 @@ module.exports = {
         */
         extend(config, ctx) {
           // Run ESLint on save
-          if (ctx.isDev && ctx.isClient) {
-            config.module.rules.push({
-              enforce: 'pre',
-              test: /\.(js|vue)$/,
-              loader: 'eslint-loader',
-              exclude: /(node_modules)/
-            })
-          }
+          // if (ctx.isDev && ctx.isClient) {
+          //   config.module.rules.push({
+          //     enforce: 'pre',
+          //     test: /\.(js|vue)$/,
+          //     loader: 'eslint-loader',
+          //     exclude: /(node_modules)/
+          //   })
+          // }
         }
       }
 }

@@ -1,43 +1,57 @@
 <template>
-    <div class="container">
-        <div>
-            <logo/>
-            <h1 class="title">
-                nuxt-client-2.0
-            </h1>
-            <h2 class="subtitle">
-                My wonderful Nuxt.js project
-            </h2>
-            <div class="links">
-                <a
-                        href="https://nuxtjs.org/"
-                        target="_blank"
-                        class="button--green">
-                    Documentation
-                </a>
-                <a
-                        href="https://github.com/nuxt/nuxt.js"
-                        target="_blank"
-                        class="button--grey">GitHub</a>
-            </div>
+    <div>
+        <no-ssr>
+        <TopHeader
+                app-name="JSON-LD"
+                user-name="Thierry Nguyen"
+                shop-name="shop-dev">
+            <template slot="actions">
+                <TopHeaderQuickStart
+                        :show="true"
+                        :step="1"
+                        :steps="2"
+                        title="Publish to shop" class="ml-auto">
+                    <div class="form-group">
+                        Let's publish change to your store.
+                    </div>
+                    <div class="form-group text-right mb-1">
+                        <Button class="btn-info ml-2 ml-sm-3 mr-auto">Publish</Button>
+                    </div>
+                </TopHeaderQuickStart>
+            </template>
+        </TopHeader>
+        <div class="container-fluid">
+          <div class="row">
+            <SideBar :items="items"/>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-0 px-md-4">
+              <router-view></router-view>
+            </main>
+          </div>
         </div>
-        <nuxt-link to="/secret">Go to /secret</nuxt-link>
+        </no-ssr>
     </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+//import Logo from '~/components/Logo.vue'
+import TopHeader from './../node_modules/polaris-vue/src/components/TopHeader'
+import SideBar from './../node_modules/polaris-vue/src/components/sidebar/SideBar'
+import TopHeaderQuickStart from './../node_modules/polaris-vue/src/components/TopHeaderQuickStart'
+import Button from './../node_modules/polaris-vue/src/components/polaris/Button'
+import nav from './../node_modules/polaris-vue/src/nav'
 
 export default {
     components: {
-        Logo
+        TopHeader,
+        SideBar,
+        TopHeaderQuickStart,
+        Button,
+        nav
     },
-    asyncData() {
-        return new Promise(resolve => {
-            setTimeout(function() {
-                resolve({ name: 'world' })
-            }, 1000)
-        })
+    data() {
+        return {
+            items: nav.items
+        }
     }
 }
 </script>
