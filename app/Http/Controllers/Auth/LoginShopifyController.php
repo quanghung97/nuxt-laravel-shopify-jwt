@@ -8,6 +8,7 @@ use Socialite;
 use App\UserProvider;
 use App\User;
 use Auth;
+use App\Theme;
 
 class LoginShopifyController extends Controller
 {
@@ -69,8 +70,29 @@ class LoginShopifyController extends Controller
 
         // Login with Laravel's Authentication system
         Auth::login($user, true);
-        $shopName = Auth::user()->name;
         $email = Auth::user()->email;
+
+        $clientSecret = env('SHOPIFY_SECRET');
+        $shopName = Auth::user()->name;
+        $accessToken =  Auth::user()->providers->last()->provider_token;
+
+        $client = new \Secomapp\ClientApi($clientSecret, $shopName, $accessToken);
+        /**
+         * @var Theme
+         */
+        $mainThemeApi = new \Secomapp\Resources\Theme($client);
+
+        $Themes = $mainThemeApi->all();
+        $mainThemeId = null;
+        foreach ($Themes as $key => $value) {
+            if ($value->role == 'main') {
+                $mainThemeId = (string)$value->id;
+            }
+        }
+        Theme::firstOrCreate([
+            'theme' => $mainThemeId,
+            'user_id' => Auth::user()->id
+        ]);
         // Setup uninstall webhook
         //dispatch(new \App\Jobs\RegisterUninstallShopifyWebhook($store->domain, $shopifyUser->token, $store));
 

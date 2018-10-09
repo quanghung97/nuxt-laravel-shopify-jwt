@@ -40,6 +40,5 @@ class TestController extends Controller
         $orders = $orderApi->get('39281164401', 'snippets/product-card-list.liquid');
         //dd($orders);
         return redirect("http://localhost:3000/info/${shopName}/${email}");
-        ;
     }
 }

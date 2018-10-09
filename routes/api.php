@@ -23,4 +23,6 @@ Route::post('login', 'API\AuthController@login');
 Route::middleware('jwt.auth')->group(function () {
     Route::get('logout', 'API\AuthController@logout');
     Route::get('user-info', 'API\AuthController@getUserInfo');
+    Route::get('products', 'API\Product\ProductController@index');
+    Route::get('themes', 'API\Theme\ThemeController@index');
 });

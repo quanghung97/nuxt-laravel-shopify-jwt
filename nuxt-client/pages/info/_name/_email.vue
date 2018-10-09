@@ -16,6 +16,9 @@ export default {
         //redirect('localhost:3000/secret')
     },
     mounted() {
+        // Cookies.remove('token_cookie')
+        // Cookies.remove('name')
+        // Cookies.remove('email')
         this.$nextTick(() => {
             this.$nuxt.$loading.start()
             setTimeout(() => this.$nuxt.$loading.finish(), 1000)
@@ -30,7 +33,7 @@ export default {
             Cookies.remove('name')
             Cookies.remove('email')
         }
-        this.$router.push({ path: '/secret' })
+        this.$router.push({ path: '/all-products' })
     }
 }
 </script>

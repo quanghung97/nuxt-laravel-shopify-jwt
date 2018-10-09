@@ -19,8 +19,9 @@ const createStore = () => {
                     const parsed = cookieparser.parse(req.headers.cookie)
                     try {
                         //console.log(parsed.token_cookie)
-                        commit('auth/SET_TOKEN', parsed.token_cookie)
-                        commit('auth/SET_USER', parsed)
+                        await dispatch('auth/login', parsed)
+                        //commit('auth/SET_TOKEN', parsed.token_cookie)
+                        //commit('auth/SET_USER', parsed)
                     } catch (err) {
                         // No valid cookie found
                     }

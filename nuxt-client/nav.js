@@ -6,7 +6,7 @@ export default {
     },
     {
       name: 'All Product random 4-5 stars',
-      url: '/secret'
+      url: '/all-products'
     }
   ]
 }

@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email'
+        'name', 'email', 'password'
     ];
 
     /**
@@ -43,6 +43,14 @@ class User extends Authenticatable implements JWTSubject
     public function providers()
     {
         return $this->hasMany('App\UserProvider');
+    }
+
+    /**
+     * Get the phone record associated with the user.
+     */
+    public function theme()
+    {
+        return $this->hasOne('App\Theme');
     }
 
     /**
