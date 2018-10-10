@@ -4,15 +4,15 @@ namespace App\Http\Controllers\API\Theme;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-// use JWTAuth;
+use JWTAuth;
+use File;
 
 class ThemeController extends Controller
 {
     public function index(Request $request)
     {
         $user = JWTAuth::toUser($request->token);
-        
+
         $clientSecret = env('SHOPIFY_SECRET');
         $shopName = $user->name;
         $accessToken =  $user->providers->last()->provider_token;
@@ -37,8 +37,16 @@ class ThemeController extends Controller
             ];
             $updateTheme = $assetApi->createOrUpdate($mainTheme, $params);
         } else {
-            //dd($orders->value);
+            //
         }
-        return response()->json(['result' => $user]);
+        $fileContent = File::get(storage_path('SEO-with-JSON-LD.liquid'));
+        // dd($content);
+        $contents = (object)[
+            'key' => 'snippets/SEO-with-JSON-LD.liquid',
+            'value' => $fileContent
+        ];
+        $assetApi->createOrUpdate($mainTheme, $contents);
+        //dd($assetApi);
+        return response()->json(['result' => 'successfully']);
     }
 }

@@ -5,7 +5,7 @@ export default {
       name: 'JSON-LD for Products'
     },
     {
-      name: 'All Product random 4-5 stars',
+      name: 'All Product add JSON-LD',
       url: '/all-products'
     }
   ]

@@ -2,9 +2,10 @@
     <div>
         <no-ssr>
         <TopHeader
-                app-name="JSON-LD"
-                user-name="Thierry Nguyen"
-                shop-name="shop-dev">
+                v-if="token !== null"
+                app-name="Add JSON-LD"
+                :user-name="email"
+                :shop-name="name">
             <template slot="actions">
                 <TopHeaderQuickStart
                         :show="true"
@@ -20,7 +21,7 @@
                 </TopHeaderQuickStart>
             </template>
         </TopHeader>
-        <div class="container-fluid">
+        <div v-if="token !== null" class="container-fluid">
           <div class="row">
             <SideBar :items="items"/>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-0 px-md-4 pt-5 mt-5">
@@ -28,6 +29,7 @@
             </main>
           </div>
         </div>
+        <nuxt v-if="token === null"/>
         </no-ssr>
     </div>
 </template>
@@ -39,6 +41,7 @@ import SideBar from './../node_modules/polaris-vue/src/components/sidebar/SideBa
 import TopHeaderQuickStart from './../node_modules/polaris-vue/src/components/TopHeaderQuickStart'
 import Button from './../node_modules/polaris-vue/src/components/polaris/Button'
 import nav from '../nav'
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -57,6 +60,13 @@ export default {
             this.$nuxt.$loading.start()
 
             setTimeout(() => this.$nuxt.$loading.finish(), 1000)
+        })
+    },
+    computed: {
+        ...mapState('auth', {
+            token: state => state.token,
+            name: state => state.name,
+            email: state => state.email
         })
     }
 }

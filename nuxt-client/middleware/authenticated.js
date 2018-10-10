@@ -1,4 +1,4 @@
-const Cookie = require('js-cookie')
+//const Cookie = require('js-cookie')
 
 export default function({ store, redirect, error }) {
     // If the user is not authenticated
