@@ -4,14 +4,15 @@ namespace App\Http\Controllers\API\Theme;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use JWTAuth;
+
+// use JWTAuth;
 
 class ThemeController extends Controller
 {
     public function index(Request $request)
     {
         $user = JWTAuth::toUser($request->token);
-
+        
         $clientSecret = env('SHOPIFY_SECRET');
         $shopName = $user->name;
         $accessToken =  $user->providers->last()->provider_token;
